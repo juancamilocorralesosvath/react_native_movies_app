@@ -6,6 +6,7 @@ import { fetchMovies } from "@/services/api";
 import MovieCard from '@/components/MovieCard';
 import { icons } from '@/constants/icons';
 import SearchBar from '@/components/SearchBar';
+import { updateSearchCount } from '@/services/appwrite';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -16,10 +17,21 @@ const Search = () => {
     query: searchQuery
   }), false)
 
+  const handleSearch = (text: string) => {
+    setSearchQuery(text)
+  }
+
+  // debounced search effect
   useEffect(() => {
+
     const timeoutId = setTimeout(async () => {
     if(searchQuery.trim()){
-      await loadMovies()
+      await loadMovies();
+
+      // call updateSearchCount only if there are results
+      if(movies?.length! > 0 && movies?.[0]){
+        await updateSearchCount(searchQuery, movies[0])
+      }
     } else {
       reset()
     }
@@ -35,7 +47,7 @@ const Search = () => {
       <Image source={images.bg} className='flex-1 absolute w-full z-0' resizeMode='cover' />
 
       <FlatList 
-        data={movies} 
+        data={movies as Movie[]} 
         renderItem={({item}) => <MovieCard {...item} />}
         keyExtractor={(item) => item.id.toString()}
         className='px-5'
@@ -56,7 +68,7 @@ const Search = () => {
               <SearchBar 
               placeholder='Search movies...'
               value={searchQuery}
-              onChangeText={(text:string) => setSearchQuery(text)}
+              onChangeText={handleSearch}
               />
             </View>
             {moviesLoading && (
