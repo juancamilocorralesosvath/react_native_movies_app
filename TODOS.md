@@ -1,1 +1,5 @@
-video timing: 1:04:47
+video timing: 2:45:09
+
+{/* <Text className="text-white text-sm">
+                        <TrendingCard movie={item} index={index} />
+                      </Text> */}
