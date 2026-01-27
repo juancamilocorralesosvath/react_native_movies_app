@@ -100,8 +100,6 @@ const Search = () => {
           ) : null
         }
       />
-
-      <Text>search</Text>
     </View>
   )
 }
