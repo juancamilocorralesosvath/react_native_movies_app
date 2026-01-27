@@ -1,5 +1,3 @@
-video timing: 2:45:09
-
-{/* <Text className="text-white text-sm">
-                        <TrendingCard movie={item} index={index} />
-                      </Text> */}
+1. implement profile page
+2. implement saved page
+3. use flatlist instead of scrollview in homepage
